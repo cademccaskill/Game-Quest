@@ -1,0 +1,49 @@
+/* Center everything and add retro colors */
+body {
+  background: lightgray;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+}
+
+
+
+/* Retro text styling */
+h1, h2, h3 {
+  color: #ff6b9d;
+  margin: 20px 0;
+}
+
+/* Buttons with retro style */
+button {
+  background: black;
+  border: 3px solid #fff;
+  color: #fff;
+  padding: 12px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* Links with retro colors */
+a {
+  color: #4facfe;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #00f2fe;
+  text-shadow: 0 0 10px #00f2fe;
+}
