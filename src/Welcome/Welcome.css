@@ -1,4 +1,4 @@
-/* Center everything and add retro colors */
+/* just some basic styling havent had the time yet */
 body {
   background: lightgray;
   min-height: 100vh;
@@ -9,15 +9,11 @@ body {
   color: black;
 }
 
-
-
-/* Retro text styling */
 h1, h2, h3 {
   color: #ff6b9d;
   margin: 20px 0;
 }
 
-/* Buttons with retro style */
 button {
   background: black;
   border: 3px solid #fff;
@@ -36,7 +32,6 @@ button:hover {
   box-shadow: 7px 7px 0px rgba(0, 0, 0, 0.3);
 }
 
-/* Links with retro colors */
 a {
   color: #4facfe;
   text-decoration: none;
