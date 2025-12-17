@@ -3,13 +3,11 @@
     {
       "email": "HelloWorld@gmail.com",
       "fullName": "HelloWorld",
-      "isStaff": false,
       "id": 1
     },
     {
       "email": "cademccaskill@gmail.com",
       "fullName": "ArCayde",
-      "isStaff": false,
       "id": 2
     }
   ],
