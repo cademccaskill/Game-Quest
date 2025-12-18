@@ -1,22 +1,29 @@
 import { useEffect, useState } from "react"
-import { getGamesByUserId, getAllGenres, getAllPlatforms, deleteGame } from "../services/gameService"
+import { getGamesByUserId, getAllGenres, getAllPlatforms, deleteGame, getAllStatus } from "../services/gameService"
+import { useNavigate } from "react-router-dom"
 import "./GameDashboard.css"
 
-export const GameDashBoard = () => {
+export const GameDashBoard = ({ currentUser }) => {
   const [games, setGames] = useState([])
   const [genres, setGenres] = useState([])
   const [platforms, setPlatforms] = useState([])
+  const [statuses, setStatuses] = useState([])
   const [filteredGames, setFilteredGames] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
+  
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem("honey_user"))
-    if (currentUser) {
+  const getAndSetGames = () => {
+    if (currentUser?.id) {
       getGamesByUserId(currentUser.id).then((gameArray) => {
         setGames(gameArray)
       })
     }
-  }, [])
+  }
+
+  useEffect(() => {
+    getAndSetGames()
+  }, [currentUser])
 
   useEffect(() => {
     getAllGenres().then((genreArray) => {
@@ -27,6 +34,12 @@ export const GameDashBoard = () => {
   useEffect(() => {
     getAllPlatforms().then((platformArray) => {
       setPlatforms(platformArray)
+    })
+  }, [])
+
+  useEffect(() => {
+    getAllStatus().then((statusArray) => {
+      setStatuses(statusArray)
     })
   }, [])
 
@@ -45,18 +58,23 @@ export const GameDashBoard = () => {
     return platforms.find(platform => platform.id === platformId)?.platformName
   }
 
-  const handleDelete = (gameId) => {
-    deleteGame(gameId).then(() => {
-      const currentUser = JSON.parse(localStorage.getItem("honey_user"))
-      getGamesByUserId(currentUser.id).then((gameArray) => {
-        setGames(gameArray)
-      })
+  const getStatusName = (statusId) => {
+    return statuses.find(status => status.id === statusId)?.statusName
+  }
+
+  const handleDelete = (game) => {
+    deleteGame(game.id).then(() => {
+      getAndSetGames()
     })
   }
 
   return (
     <div className="games-container">
       <h1>My Games</h1>
+      
+      <button onClick={() => navigate("/games/add")} className="add-game-btn">
+        Add New Game
+      </button>
       
       <input
         type="text"
@@ -72,8 +90,10 @@ export const GameDashBoard = () => {
             <h3>{game.gameName}</h3>
             <h4>Genre: {getGenreName(game.genresId)}</h4>
             <h4>Platform: {getPlatformName(game.platformsId)}</h4>
+            <h4>Status: {getStatusName(game.statusId)}</h4>
             <p>{game.notes}</p>
-            <button onClick={() => handleDelete(game.id)}>Delete</button>
+            <button onClick={() => navigate(`/games/${game.id}/edit`)}>Edit</button>
+            <button onClick={() => handleDelete(game)}>Delete</button>
           </div>
         ))}
       </div>

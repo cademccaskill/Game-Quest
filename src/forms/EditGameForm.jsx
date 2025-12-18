@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import "./Form.css"
-import { useNavigate } from "react-router-dom"
-import { createGame, getAllGenres, getAllPlatforms, getAllStatus } from "../services/gameService"
+import { useNavigate, useParams } from "react-router-dom"
+import { getGameById, updateGame, getAllGenres, getAllPlatforms, getAllStatus } from "../services/gameService"
 
-export const AddGameForm = ({ currentUser }) => {
+export const EditGameForm = ({ currentUser }) => {
   const [gameName, setGameName] = useState("")
   const [genreId, setGenreId] = useState(0)
   const [platformId, setPlatformId] = useState(0)
@@ -14,7 +14,19 @@ export const AddGameForm = ({ currentUser }) => {
   const [platforms, setPlatforms] = useState([])
   const [statuses, setStatuses] = useState([])
   
+  const { gameId } = useParams()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    getGameById(gameId).then((data) => {
+      setGameName(data.gameName)
+      setGenreId(data.genresId)
+      setPlatformId(data.platformsId)
+      setStatusId(data.statusId)
+      setGameImg(data.gameImg)
+      setNotes(data.notes)
+    })
+  }, [gameId])
 
   useEffect(() => {
     getAllGenres().then(setGenres)
@@ -22,27 +34,28 @@ export const AddGameForm = ({ currentUser }) => {
     getAllStatus().then(setStatuses)
   }, [])
 
-  const handleSave = (event) => {
-    event.preventDefault()
+const handleSave = (event) => {
+  event.preventDefault()
 
-    const newGame = {
-      userId: currentUser.id,
-      gameName: gameName,
-      genresId: parseInt(genreId),
-      platformsId: parseInt(platformId),
-      statusId: parseInt(statusId),
-      gameImg: gameImg,
-      notes: notes
-    }
-
-    createGame(newGame).then(() => {
-      navigate("/GameDashboard")
-    })
+  const updatedGame = {
+    id: parseInt(gameId),
+    userId: currentUser.id,
+    gameName: gameName,
+    genresId: parseInt(genreId),
+    platformsId: parseInt(platformId),
+    statusId: parseInt(statusId),
+    gameImg: gameImg,
+    notes: notes
   }
+
+  updateGame(updatedGame).then(() => {
+    navigate("/GameDashboard")
+  })
+}
     
   return (
     <form className="game-form" onSubmit={handleSave}>
-      <h2 className="form-title">Add New Game</h2>
+      <h2 className="form-title">Edit Game</h2>
       
       <fieldset>
         <div className="form-group">
@@ -137,7 +150,7 @@ export const AddGameForm = ({ currentUser }) => {
         </div>
       </fieldset>
 
-      <button type="submit" className="save-btn">Add Game</button>
+      <button type="submit" className="save-btn">Save Changes</button>
     </form>
   )
 }
