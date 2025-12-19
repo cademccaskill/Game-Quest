@@ -27,7 +27,7 @@
       "platformsId": 1,
       "genresId": 2,
       "statusId": 3,
-      "gameImg": "https://example.com/zelda.jpg",
+      "gameImg": "img",
       "notes": "Amazing open world game!"
     },
     {
