@@ -92,7 +92,7 @@ export const GameDashBoard = ({ currentUser }) => {
             <h4>Platform: {getPlatformName(game.platformsId)}</h4>
             <h4>Status: {getStatusName(game.statusId)}</h4>
             <p>{game.notes}</p>
-            <button onClick={() => navigate(`/games/${game.id}/edit`)}>Edit</button>
+            <button onClick={() => navigate(`/gameEdit/${game.id}`)}>Edit</button>
             <button onClick={() => handleDelete(game)}>Delete</button>
           </div>
         ))}

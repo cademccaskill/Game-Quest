@@ -25,9 +25,7 @@ export const NavBar = () => {
     </Link>
   </li>
 ) : (
-  <li className="navbar-item">
-          <Link to="/login">Login</Link>
-        </li>
+  ""
 )}
 </url>
 }
